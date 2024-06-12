@@ -1,7 +1,7 @@
 [gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://characters/player/Player.gd" type="Script" id=1]
-[ext_resource path="res://characters/CharacterMover.gd" type="Script" id=2]
+[ext_resource path="res://CharacterMover.tscn" type="PackedScene" id=2]
 [ext_resource path="res://characters/HealthManager.tscn" type="PackedScene" id=3]
 [ext_resource path="res://characters/player/WeaponManager.gd" type="Script" id=4]
 [ext_resource path="res://weapons/raw_assets/machete.glb" type="PackedScene" id=5]
@@ -471,12 +471,10 @@ shape = SubResource( 13 )
 [node name="FirePoint" type="Spatial" parent="Camera"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.111322 )
 
-[node name="CharacterMover" type="Spatial" parent="."]
-script = ExtResource( 2 )
+[node name="CharacterMover" parent="." instance=ExtResource( 2 )]
 
 [node name="HealthManager" parent="." instance=ExtResource( 3 )]
 
 [connection signal="fired" from="Camera/WeaponManager/Weapons/MachineGun" to="Camera/WeaponManager/Weapons/MachineGun/Graphics/MuzzleFlash" method="flash"]
 [connection signal="fired" from="Camera/WeaponManager/Weapons/Shotgun" to="Camera/WeaponManager/Weapons/Shotgun/Graphics/MuzzleFlash" method="flash"]
 [connection signal="fired" from="Camera/WeaponManager/Weapons/RocketLauncher" to="Camera/WeaponManager/Weapons/RocketLauncher/Graphics/MuzzleFlash" method="flash"]
-[connection signal="movement_info" from="CharacterMover" to="Camera/WeaponManager" method="update_animation"]
