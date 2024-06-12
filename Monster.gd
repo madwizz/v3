@@ -109,8 +109,11 @@ func hurt(dmg: int, dir: Vector3):
 
 func start_attack():
 	can_attack = false
-	anim_player.play("attacking animation", -1, attack_speed)
+	anim_player.play("ghost_attack", -1, attack_speed)
 	attack_timer.start()
+
+func emit_attack_signal():
+	emit_signal("attack")
 
 func finish_attack():
 	can_attack = true
