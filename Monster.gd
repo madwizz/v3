@@ -15,7 +15,23 @@ var path = []
 export var sight_angle = 45.0
 export var turn_speed = 360.0
 
+export var attack_range = 2.0
+export var attack_rate = 0.5
+var attack_timer : Timer
+var can_attack = true
+
+# custom speed for animation player
+export var attack_speed = 1.0
+
+signal attack
+
 func _ready():
+	attack_timer = Timer.new()
+	attack_timer.wait_time = attack_rate
+	attack_timer.connect("timeout", self, "finish_attack")
+	attack_timer.one_shot = true
+	add_child(attack_timer)
+	
 	player = get_tree().get_nodes_in_group("player")[0]
 	var hitbox = $CollisionShape/HitBox
 	if hitbox is HitBox:
@@ -59,6 +75,8 @@ func process_state_idle(delta):
 		set_state_chase()
 
 func process_state_chase(delta):
+	if within_dop(attack_range) and has_los_player():
+		set_state_attack()
 	var player_pos = player.global_transform.origin
 	var our_pos = global_transform.origin
 	path = nav.get_simple_path(our_pos, player_pos)
@@ -71,7 +89,14 @@ func process_state_chase(delta):
 	face_dir(dir, delta)
 
 func process_state_attack(delta):
-	pass
+	char_mover.set_move_vec(Vector3.ZERO)
+	# comment out line below to allow dodge the attacks
+	# face_dir(global_transform.origin.direction_to(player.global_transform.origin), delta)
+	if can_attack:
+		if !within_dop(attack_range) or !can_see_player():
+			set_state_chase()
+		else:
+			start_attack()
 
 func process_state_dead(delta):
 	pass
@@ -81,6 +106,14 @@ func hurt(dmg: int, dir: Vector3):
 	if cur_state == STATES.IDLE:
 		set_state_chase()
 	health_manager.hurt(dmg, dir)
+
+func start_attack():
+	can_attack = false
+	anim_player.play("attacking animation", -1, attack_speed)
+	attack_timer.start()
+
+func finish_attack():
+	can_attack = true
 
 func can_see_player():
 	var dir_to_player = global_transform.origin.direction_to(player.global_transform.origin)
@@ -114,3 +147,7 @@ func alert(check_los=true):
 		return
 	anim_player.play("idle to flying")
 	set_state_chase()
+
+# dop = distance of the player
+func within_dop(dis: float):
+	return global_transform.origin.distance_to(player.global_transform.origin) < attack_range
