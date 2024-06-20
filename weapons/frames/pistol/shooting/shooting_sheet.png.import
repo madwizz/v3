@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sawed-off reload_02.png-f5b7f34d6c4dd588faec0d8b1bc5bdbb.stex"
+path="res://.import/shooting_sheet.png-3692df4a8b7b8f0bd01c4069fe9331dd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://weapons/frames/shotgun/reload/sawed-off reload_02.png"
-dest_files=[ "res://.import/sawed-off reload_02.png-f5b7f34d6c4dd588faec0d8b1bc5bdbb.stex" ]
+source_file="res://weapons/frames/pistol/shooting/shooting_sheet.png"
+dest_files=[ "res://.import/shooting_sheet.png-3692df4a8b7b8f0bd01c4069fe9331dd.stex" ]
 
 [params]
 
@@ -23,7 +23,7 @@ flags/repeat=1
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
-flags/srgb=1
+flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

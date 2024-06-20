@@ -1,6 +1,6 @@
 extends Spatial
 
-onready var anim_player = $AnimationPlayer
+onready var anim_player = $Sprite3D/AnimationPlayer
 onready var bullet_emitters_base : Spatial = $BulletEmitters
 onready var bullet_emitters = $BulletEmitters.get_children()
 
@@ -44,6 +44,8 @@ func attack(attack_input_just_pressed: bool, attack_input_held: bool):
 	if ammo == 0:
 		if attack_input_just_pressed:
 			emit_signal("out_of_ammo")
+			anim_player.stop()
+			anim_player.play("empty")
 		return
 	
 	if ammo > 0:
@@ -54,7 +56,10 @@ func attack(attack_input_just_pressed: bool, attack_input_held: bool):
 	for bullet_emitter in bullet_emitters:
 		bullet_emitter.fire()
 	bullet_emitters_base.global_transform = start_transform
-	anim_player.stop()
+	
+	if anim_player.is_playing():
+		anim_player.stop()
+	
 	anim_player.play("attack")
 	emit_signal("fired")
 	can_attack = false
@@ -74,6 +79,3 @@ func set_inactive():
 
 func is_idle():
 	return !anim_player.is_playing() or anim_player.current_animation == "idle"
-
-
-

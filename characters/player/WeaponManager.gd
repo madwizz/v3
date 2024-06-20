@@ -1,12 +1,10 @@
 extends Spatial
 
 
-enum WEAPON_SLOTS {MACHETE, MACHINE_GUN, SHOTGUN, ROCKET_LAUNCHER}
+enum WEAPON_SLOTS { PISTOL, SHOTGUN }
 var slots_unlocked = {
-	WEAPON_SLOTS.MACHETE: true,
-	WEAPON_SLOTS.MACHINE_GUN: true,
+	WEAPON_SLOTS.PISTOL: true,
 	WEAPON_SLOTS.SHOTGUN: true,
-	WEAPON_SLOTS.ROCKET_LAUNCHER: true,
 }
 
 onready var anim_player = $AnimationPlayer
@@ -30,11 +28,10 @@ func init(_fire_point: Spatial, _bodies_to_exclude: Array):
 		if weapon.has_method("init"):
 			weapon.init(_fire_point, _bodies_to_exclude)
 	
-	weapons[WEAPON_SLOTS.MACHINE_GUN].connect("fired", self, "alert_nearby_enemies")
+	weapons[WEAPON_SLOTS.PISTOL].connect("fired", self, "alert_nearby_enemies")
 	weapons[WEAPON_SLOTS.SHOTGUN].connect("fired", self, "alert_nearby_enemies")
-	weapons[WEAPON_SLOTS.ROCKET_LAUNCHER].connect("fired", self, "alert_nearby_enemies")
 	
-	switch_to_weapon_slot(WEAPON_SLOTS.MACHETE)
+	switch_to_weapon_slot(WEAPON_SLOTS.PISTOL)
 
 func attack(attack_input_just_pressed: bool, attack_input_held: bool):
 	if cur_weapon.has_method("attack"):
