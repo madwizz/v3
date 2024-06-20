@@ -1,7 +1,7 @@
 [gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://characters/player/Player.gd" type="Script" id=1]
-[ext_resource path="res://CharacterMover.tscn" type="PackedScene" id=2]
+[ext_resource path="res://characters/CharacterMover.tscn" type="PackedScene" id=2]
 [ext_resource path="res://characters/HealthManager.tscn" type="PackedScene" id=3]
 [ext_resource path="res://characters/player/WeaponManager.gd" type="Script" id=4]
 [ext_resource path="res://weapons/raw_assets/machete.glb" type="PackedScene" id=5]
@@ -315,7 +315,6 @@ automatic = true
 attack_rate = 0.1
 
 [node name="Graphics" type="Spatial" parent="Camera/WeaponManager/Weapons/MachineGun"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0689657 )
 
 [node name="machinegun" parent="Camera/WeaponManager/Weapons/MachineGun/Graphics" instance=ExtResource( 6 )]
 transform = Transform( 0.149456, 0, 0, 0, 0.149456, 0, 0, 0, 0.149456, 0, 0, 0 )
