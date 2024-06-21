@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/2nd barrel_01.png-53d04d33e360205ff8d03fb0bd74a6e3.stex"
+path="res://.import/empty_sheet.png-4b15ccdd3881d17e745e7d690abf7254.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://weapons/frames/shotgun/attack/2nd barrel/2nd barrel_01.png"
-dest_files=[ "res://.import/2nd barrel_01.png-53d04d33e360205ff8d03fb0bd74a6e3.stex" ]
+source_file="res://weapons/frames/shotgun/empty/empty_sheet.png"
+dest_files=[ "res://.import/empty_sheet.png-4b15ccdd3881d17e745e7d690abf7254.stex" ]
 
 [params]
 

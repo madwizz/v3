@@ -1,6 +1,11 @@
 extends Spatial
 
-onready var anim_player = $Sprite3D/AnimationPlayer
+# considering the animation its done vie visible boolean in aniamtion tracks
+# all these fuckery because of timer and previous 3D weapons
+# all that should just work through AnimatedSprite3D node but it doesnt
+# TODO ? rewrite it if anim_name.is_playing: idle_anim visible = false or similar
+
+onready var anim_player = $Animations/AnimationPlayer
 onready var bullet_emitters_base : Spatial = $BulletEmitters
 onready var bullet_emitters = $BulletEmitters.get_children()
 
@@ -25,6 +30,10 @@ func _ready():
 	attack_timer.connect("timeout", self, "finish_attack")
 	attack_timer.one_shot = true
 	add_child(attack_timer)
+	
+	# default idle all the time
+	# surprisingly animation switch is smooth
+	anim_player.play("idle")
 
 func init(_fire_point: Spatial, _bodies_to_exclude: Array):
 	fire_point = _fire_point
