@@ -4,7 +4,7 @@ extends Spatial
 enum WEAPON_SLOTS { PISTOL, SHOTGUN }
 var slots_unlocked = {
 	WEAPON_SLOTS.PISTOL: true,
-	WEAPON_SLOTS.SHOTGUN: true,
+	WEAPON_SLOTS.SHOTGUN: false,
 }
 
 onready var anim_player = $AnimationPlayer
@@ -18,6 +18,8 @@ var cur_weapon = null
 var fire_point : Spatial
 var bodies_to_exclude : Array = []
 
+signal ammo_changed
+
 func _ready():
 	pass
 
@@ -30,6 +32,9 @@ func init(_fire_point: Spatial, _bodies_to_exclude: Array):
 	
 	weapons[WEAPON_SLOTS.PISTOL].connect("fired", self, "alert_nearby_enemies")
 	weapons[WEAPON_SLOTS.SHOTGUN].connect("fired", self, "alert_nearby_enemies")
+	
+	for weapon in weapons:
+		weapon.connect("fired", self, "emit_ammo_changed_signal")
 	
 	switch_to_weapon_slot(WEAPON_SLOTS.PISTOL)
 
@@ -62,6 +67,7 @@ func switch_to_weapon_slot(slot_ind: int):
 		cur_weapon.set_active()
 	else:
 		cur_weapon.show()
+	emit_ammo_changed_signal()
 
 func disable_all_weapons():
 	for weapon in weapons:
@@ -86,3 +92,21 @@ func alert_nearby_enemies():
 	for nearby_enemy in nearby_enemies:
 		if nearby_enemy.has_method("alert"):
 			nearby_enemy.alert(false)
+
+func get_pickup(pickup_type, ammo):
+	match pickup_type:
+		Pickup.PICKUP_TYPES.PISTOL:
+			if !slots_unlocked[WEAPON_SLOTS.PISTOL]:
+				slots_unlocked[WEAPON_SLOTS.PISTOL] = true
+				switch_to_weapon_slot(WEAPON_SLOTS.PISTOL)
+			weapons[WEAPON_SLOTS.PISTOL].ammo += ammo
+		Pickup.PICKUP_TYPES.SHOTGUN:
+			if !slots_unlocked[WEAPON_SLOTS.SHOTGUN]:
+				slots_unlocked[WEAPON_SLOTS.SHOTGUN] = true
+				switch_to_weapon_slot(WEAPON_SLOTS.SHOTGUN)
+			weapons[WEAPON_SLOTS.SHOTGUN].ammo += ammo
+	emit_ammo_changed_signal()
+
+func emit_ammo_changed_signal():
+	emit_signal("ammo_changed", cur_weapon.ammo)
+	print(cur_weapon.ammo)

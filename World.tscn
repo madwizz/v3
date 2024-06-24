@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://environment/raw_assets/grass_lowres.png" type="Texture" id=1]
 [ext_resource path="res://environment/assets/brickwall.tscn" type="PackedScene" id=2]
@@ -12,7 +12,6 @@
 [ext_resource path="res://pickups/ShotGunPickup.tscn" type="PackedScene" id=10]
 [ext_resource path="res://pickups/PistolAmmoPickup.tscn" type="PackedScene" id=11]
 [ext_resource path="res://pickups/PistolPickup.tscn" type="PackedScene" id=12]
-[ext_resource path="res://characters/enemies/Ghost/a ghost.gltf" type="PackedScene" id=13]
 [ext_resource path="res://pickups/HealthPickup.tscn" type="PackedScene" id=14]
 
 [sub_resource type="SpatialMaterial" id=1]
@@ -103,10 +102,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5797, 2.9269, 12.0526 )
 [node name="Timer" type="Timer" parent="FireballSpawner"]
 autostart = true
 
-[node name="a ghost" parent="." instance=ExtResource( 13 )]
-
 [node name="HealthPickup" parent="." instance=ExtResource( 14 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.39593, 2.00423, 15.4839 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00976086, 2.19636, 16.7236 )
 
 [node name="PistolAmmoPickup" parent="." instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.26163, 2.00423, 15.4839 )

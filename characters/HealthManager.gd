@@ -29,7 +29,7 @@ func hurt(damage: int, dir: Vector3):
 		emit_signal("dead")
 	else:
 		emit_signal("hurt")
-	emit_signal("health_changed")
+	emit_signal("health_changed", cur_health)
 
 func heal(amount: int):
 	if cur_health <= 0:
@@ -38,4 +38,10 @@ func heal(amount: int):
 	if cur_health > max_health:
 		cur_health = max_health
 	emit_signal("healed")
-	emit_signal("health_changed")
+	emit_signal("health_changed", cur_health)
+
+func get_pickup(pickup_type, ammo):
+	match pickup_type:
+		Pickup.PICKUP_TYPES.HEALTH:
+			heal(ammo)
+			print('healed')

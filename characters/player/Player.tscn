@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://characters/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://characters/CharacterMover.tscn" type="PackedScene" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://weapons/frames/shotgun/reload/reloading_sheet.png" type="Texture" id=16]
 [ext_resource path="res://weapons/crosshairs/crosshair065.png" type="Texture" id=17]
 [ext_resource path="res://weapons/crosshairs/crosshair066.png" type="Texture" id=18]
+[ext_resource path="res://characters/player/PickupManager.gd" type="Script" id=19]
 [ext_resource path="res://weapons/frames/shotgun/attack/2nd barrel/2nd barrel_01.png" type="Texture" id=40]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -629,6 +630,9 @@ radius = 15.0
 [sub_resource type="SphereShape" id=13]
 radius = 50.0
 
+[sub_resource type="CapsuleShape" id=32]
+radius = 0.8
+
 [node name="Player" type="KinematicBody" groups=["player"]]
 collision_layer = 6
 collision_mask = 3
@@ -836,6 +840,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.111322 )
 [node name="CharacterMover" parent="." instance=ExtResource( 2 )]
 
 [node name="HealthManager" parent="." instance=ExtResource( 3 )]
+
+[node name="PickupManager" type="Area" parent="."]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource( 19 )
+
+[node name="CollisionShape" type="CollisionShape" parent="PickupManager"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1, 0 )
+shape = SubResource( 32 )
 
 [connection signal="fired" from="Camera/WeaponManager/Weapons/Pistol" to="Camera/WeaponManager/Weapons/Pistol/Graphics/MuzzleFlash" method="flash"]
 [connection signal="fired" from="Camera/WeaponManager/Weapons/Shotgun" to="Camera/WeaponManager/Weapons/Shotgun/Graphics/MuzzleFlash" method="flash"]
