@@ -1,7 +1,7 @@
 extends KinematicBody
 
 onready var char_mover = $CharacterMover
-onready var anim_ghost = $Graphics/Enemy/AnimationPlayer
+onready var anim_player = $Graphics/Enemy/AnimationPlayer
 onready var health_manager = $HealthManager
 # in this scene node doesnt have a parent, but in world scene does
 onready var nav : Navigation = get_parent()
@@ -36,6 +36,7 @@ func _ready():
 	var hitbox = $CollisionShape/HitBox
 	if hitbox is HitBox:
 		hitbox.connect("hurt", self, "hurt")
+		anim_player.play("hurt")
 	set_state_idle()
 	
 	health_manager.connect("dead", self, "set_state_dead")
@@ -55,18 +56,18 @@ func _process(delta):
 
 func set_state_idle():
 	cur_state = STATES.IDLE
-	anim_ghost.play("idle")
+	anim_player.play("idle_loop")
 
 func set_state_chase():
 	cur_state = STATES.CHASE
-	anim_ghost.play("move_loop", 0.2)
+	anim_player.play("move_loop", 0.2)
 
 func set_state_attack():
 	cur_state = STATES.ATTACK
 
 func set_state_dead():
 	cur_state = STATES.DEAD
-	anim_ghost.play("die")
+	anim_player.play("die")
 	char_mover.freeze()
 	$CollisionShape.disabled = true
 
@@ -109,7 +110,7 @@ func hurt(dmg: int, dir: Vector3):
 
 func start_attack():
 	can_attack = false
-	anim_ghost.play("attack", -1, attack_speed)
+	anim_player.play("attack", -1, attack_speed)
 	attack_timer.start()
 
 func emit_attack_signal():
@@ -148,7 +149,7 @@ func alert(check_los=true):
 		return
 	if check_los and has_los_player():
 		return
-	anim_ghost.play("alert")
+	anim_player.play("alert")
 	set_state_chase()
 
 # dop = distance of the player
