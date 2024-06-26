@@ -218,7 +218,7 @@ tracks/28/keys = PoolRealArray( 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1.66667, 1, 
 
 [sub_resource type="CapsuleShape" id=1]
 
-[node name="Ghost" type="KinematicBody"]
+[node name="Goon" type="KinematicBody"]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource( 6 )
@@ -237,7 +237,8 @@ shape = SubResource( 1 )
 [node name="HitBox" parent="CollisionShape" instance=ExtResource( 5 )]
 
 [node name="HealthManager" parent="." instance=ExtResource( 4 )]
-max_health = 20
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20047, 0 )
+gib_at = -20
 
 [node name="CharacterMover" parent="." instance=ExtResource( 3 )]
 move_accel = 2

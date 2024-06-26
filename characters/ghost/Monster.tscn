@@ -487,6 +487,7 @@ shape = SubResource( 1 )
 [node name="HitBox" parent="CollisionShape" instance=ExtResource( 5 )]
 
 [node name="HealthManager" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.31931, 0 )
 max_health = 20
 
 [node name="CharacterMover" parent="." instance=ExtResource( 3 )]

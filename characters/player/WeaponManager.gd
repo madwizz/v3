@@ -109,4 +109,3 @@ func get_pickup(pickup_type, ammo):
 
 func emit_ammo_changed_signal():
 	emit_signal("ammo_changed", cur_weapon.ammo)
-	print(cur_weapon.ammo)

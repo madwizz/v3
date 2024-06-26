@@ -80,13 +80,13 @@ visible = false
 navmesh = SubResource( 4 )
 
 [node name="Ghost" parent="Navigation" instance=ExtResource( 5 )]
-transform = Transform( 0.969749, 0, 0.244106, 0, 1, 0, -0.244106, 0, 0.969749, -1.20285, 0.965919, -13.6908 )
+transform = Transform( 0.969749, 0, 0.244106, 0, 1, 0, -0.244106, 0, 0.969749, -1.98647, 0.813549, -13.4935 )
 
 [node name="Vomiter" parent="Navigation" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00323, -15 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.976021, -15 )
 
 [node name="Goon" parent="Navigation" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.45424, 1.01981, -18.393 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.45424, 0.943625, -18.393 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 6 )

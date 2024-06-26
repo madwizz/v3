@@ -6,8 +6,10 @@ onready var health_manager = $HealthManager
 # in this scene node doesnt have a parent, but in world scene does
 onready var nav : Navigation = get_parent()
 
-enum STATES { IDLE, CHASE, ATTACK, DEAD }
-var cur_state = STATES.IDLE
+enum STATES { IDLE, CHASE, ATTACK, DEAD, HURT }
+# var cur_state = STATES.IDLE
+var cur_state
+var prev_state
 
 var player = null
 var path = []
@@ -36,10 +38,11 @@ func _ready():
 	var hitbox = $CollisionShape/HitBox
 	if hitbox is HitBox:
 		hitbox.connect("hurt", self, "hurt")
-		anim_player.play("hurt")
+	anim_player.connect("animation_finished", self, "on_animation_finished")
 	set_state_idle()
 	
 	health_manager.connect("dead", self, "set_state_dead")
+	health_manager.connect("gibbed", $Graphics, "hide")
 	char_mover.init(self)
 	set_state_idle()
 
@@ -51,6 +54,8 @@ func _process(delta):
 			process_state_chase(delta)
 		STATES.ATTACK:
 			process_state_attack(delta)
+		STATES.HURT:
+			process_state_hurt(delta)
 		STATES.DEAD:
 			process_state_dead(delta)
 
@@ -64,6 +69,11 @@ func set_state_chase():
 
 func set_state_attack():
 	cur_state = STATES.ATTACK
+
+func set_state_hurt():
+	prev_state = cur_state
+	cur_state = STATES.HURT
+	anim_player.play("hurt")
 
 func set_state_dead():
 	cur_state = STATES.DEAD
@@ -99,14 +109,18 @@ func process_state_attack(delta):
 		else:
 			start_attack()
 
+func process_state_hurt(delta):
+	char_mover.set_move_vec(Vector3.ZERO)
+
 func process_state_dead(delta):
 	pass
 
 func hurt(dmg: int, dir: Vector3):
-	# might be redundant but just in case
-	if cur_state == STATES.IDLE:
-		set_state_chase()
-	health_manager.hurt(dmg, dir)
+	if cur_state != STATES.DEAD:
+		# prevent interrupting the hurt animation with another hurt
+		if cur_state != STATES.HURT:
+			set_state_hurt()
+		health_manager.hurt(dmg, dir)
 
 func start_attack():
 	can_attack = false
@@ -155,3 +169,14 @@ func alert(check_los=true):
 # dop = distance of the player
 func within_dop(dis: float):
 	return global_transform.origin.distance_to(player.global_transform.origin) < attack_range
+
+func on_animation_finished(anim_name):
+	if cur_state == STATES.HURT and anim_name == "hurt":
+		cur_state = prev_state
+		match prev_state:
+			STATES.IDLE:
+				set_state_idle()
+			STATES.CHASE:
+				set_state_chase()
+			STATES.ATTACK:
+				set_state_attack()
