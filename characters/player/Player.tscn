@@ -1,12 +1,12 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://characters/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://characters/CharacterMover.tscn" type="PackedScene" id=2]
 [ext_resource path="res://characters/HealthManager.tscn" type="PackedScene" id=3]
 [ext_resource path="res://characters/player/WeaponManager.gd" type="Script" id=4]
 [ext_resource path="res://weapons/frames/shotgun/attack/1st barrel/first_barrel_sheet.png" type="Texture" id=5]
-[ext_resource path="res://weapons/raw_assets/machinegun.glb" type="PackedScene" id=6]
-[ext_resource path="res://weapons/raw_assets/shotgun.glb" type="PackedScene" id=7]
+[ext_resource path="res://weapons/frames/melee/melee_sheet.png" type="Texture" id=6]
+[ext_resource path="res://weapons/DamageArea.tscn" type="PackedScene" id=7]
 [ext_resource path="res://weapons/frames/pistol/reloading/reload_sheet.png" type="Texture" id=8]
 [ext_resource path="res://weapons/HitScanBulletEmitter.tscn" type="PackedScene" id=9]
 [ext_resource path="res://weapons/Weapon.gd" type="Script" id=10]
@@ -17,21 +17,19 @@
 [ext_resource path="res://weapons/frames/shotgun/empty/empty_sheet.png" type="Texture" id=15]
 [ext_resource path="res://weapons/frames/shotgun/reload/reloading_sheet.png" type="Texture" id=16]
 [ext_resource path="res://weapons/crosshairs/crosshair001.png" type="Texture" id=17]
+[ext_resource path="res://weapons/frames/pistol/shooting/shooting_sheet.png" type="Texture" id=18]
 [ext_resource path="res://characters/player/PickupManager.gd" type="Script" id=19]
 [ext_resource path="res://ui/Stats.gd" type="Script" id=20]
+[ext_resource path="res://weapons/frames/pistol/empty/gun sprite_empty_01.png" type="Texture" id=21]
 [ext_resource path="res://weapons/frames/shotgun/attack/2nd barrel/2nd barrel_01.png" type="Texture" id=40]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
 
-[sub_resource type="StreamTexture" id=19]
-flags = 2
-load_path = "res://.import/shooting_sheet.png-3692df4a8b7b8f0bd01c4069fe9331dd.stex"
-
-[sub_resource type="Animation" id=33]
+[sub_resource type="Animation" id=47]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Empty:frame")
+tracks/0/path = NodePath("Attack:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -40,10 +38,10 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0 ]
+"values": [ true ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Reloading:frame")
+tracks/1/path = NodePath("Attack:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -55,7 +53,7 @@ tracks/1/keys = {
 "values": [ 0 ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Attack:frame")
+tracks/2/path = NodePath("Idle:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -67,7 +65,7 @@ tracks/2/keys = {
 "values": [ 0 ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Idle:frame")
+tracks/3/path = NodePath("Idle:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -76,60 +74,130 @@ tracks/3/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=48]
+resource_name = "attack"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Attack:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Idle:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Attack:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=49]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Idle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
 "values": [ 0 ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("Attack:visible")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
+tracks/1/type = "value"
+tracks/1/path = NodePath("Attack:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Idle:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=46]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Reloading:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ true ]
+"values": [ 0 ]
 }
-tracks/5/type = "value"
-tracks/5/path = NodePath("Idle:visible")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
+tracks/1/type = "value"
+tracks/1/path = NodePath("Empty:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ false ]
 }
-tracks/6/type = "value"
-tracks/6/path = NodePath("Empty:visible")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/keys = {
+tracks/2/type = "value"
+tracks/2/path = NodePath("Attack:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ true ]
-}
-tracks/7/type = "value"
-tracks/7/path = NodePath("Reloading:visible")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ true ]
+"values": [ false ]
 }
 
-[sub_resource type="Animation" id=34]
+[sub_resource type="Animation" id=42]
 resource_name = "attack"
-length = 0.42
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Attack:frame")
 tracks/0/interp = 1
@@ -167,9 +235,9 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=35]
+[sub_resource type="Animation" id=43]
 resource_name = "empty"
-length = 0.11
+length = 0.3
 tracks/0/type = "value"
 tracks/0/path = NodePath("Empty:frame")
 tracks/0/interp = 1
@@ -177,10 +245,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 2.41306e-06, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ 1, 2 ]
+"values": [ 0, 1, 2 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Empty:visible")
@@ -207,10 +275,9 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=36]
+[sub_resource type="Animation" id=44]
 resource_name = "idle"
-length = 0.01
-loop = true
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Idle:frame")
 tracks/0/interp = 1
@@ -272,9 +339,9 @@ tracks/4/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=37]
+[sub_resource type="Animation" id=45]
 resource_name = "reload"
-length = 0.55
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("Reloading:frame")
 tracks/0/interp = 1
@@ -282,10 +349,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.9, 1, 1.1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3, 4, 5, 9, 10, 11 ]
+"values": [ 0, 1, 2, 3, 4 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Reloading:visible")
@@ -306,6 +373,30 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Empty:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Attack:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
@@ -461,10 +552,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1 ),
+"times": PoolRealArray( 2.41306e-06, 0.1 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ 1, 2 ]
+"values": [ 0, 1 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Empty:visible")
@@ -593,6 +684,30 @@ tracks/2/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Attack:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Empty:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=10]
 resource_name = "idle"
@@ -653,18 +768,64 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.96046e-08, -0.15642, -0.3139
 script = ExtResource( 4 )
 
 [node name="Weapons" type="Spatial" parent="Camera/WeaponManager"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0277758, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0120811, 0, 0 )
+
+[node name="Melee" type="Spatial" parent="Camera/WeaponManager/Weapons"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.135936, 0.0357596, 0.111642 )
+script = ExtResource( 10 )
+damage = 10
+ammo = -1
+ammo_mag_max = -1
+ammo_mag = -1
+attack_rate = 0.4
+
+[node name="BulletEmitters" type="Spatial" parent="Camera/WeaponManager/Weapons/Melee"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0485455, -0.26182 )
+
+[node name="DamageArea" parent="Camera/WeaponManager/Weapons/Melee/BulletEmitters" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0485455, -0.588391 )
+
+[node name="Crosshair" type="TextureRect" parent="Camera/WeaponManager/Weapons/Melee"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -36.0
+margin_top = -36.0
+margin_right = 36.0
+margin_bottom = 36.0
+texture = ExtResource( 17 )
+
+[node name="Animations" type="Spatial" parent="Camera/WeaponManager/Weapons/Melee"]
+
+[node name="Attack" type="Sprite3D" parent="Camera/WeaponManager/Weapons/Melee/Animations"]
+transform = Transform( 0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, 0.0670378, -0.107411, -0.672383 )
+billboard = 1
+texture = ExtResource( 6 )
+hframes = 2
+vframes = 3
+
+[node name="Idle" type="Sprite3D" parent="Camera/WeaponManager/Weapons/Melee/Animations"]
+transform = Transform( 0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, 0.0670378, -0.107411, -0.672383 )
+visible = false
+billboard = 1
+texture = ExtResource( 6 )
+hframes = 2
+vframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera/WeaponManager/Weapons/Melee/Animations"]
+anims/RESET = SubResource( 47 )
+anims/attack = SubResource( 48 )
+anims/idle = SubResource( 49 )
 
 [node name="Pistol" type="Spatial" parent="Camera/WeaponManager/Weapons"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.135936, 0.0357596, 0.111642 )
+visible = false
 script = ExtResource( 10 )
 attack_rate = 0.3
 
 [node name="Graphics" type="Spatial" parent="Camera/WeaponManager/Weapons/Pistol"]
-
-[node name="machinegun" parent="Camera/WeaponManager/Weapons/Pistol/Graphics" instance=ExtResource( 6 )]
-transform = Transform( 0.149456, 0, 0, 0, 0.149456, 0, 0, 0, 0.149456, 0, 0, 0 )
-visible = false
 
 [node name="MuzzleFlash" type="Spatial" parent="Camera/WeaponManager/Weapons/Pistol/Graphics"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.051043, -0.256063 )
@@ -698,8 +859,9 @@ texture = ExtResource( 17 )
 
 [node name="Attack" type="Sprite3D" parent="Camera/WeaponManager/Weapons/Pistol/Animations"]
 transform = Transform( 0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, 0.0670378, -0.107411, -0.672383 )
+visible = false
 billboard = 1
-texture = SubResource( 19 )
+texture = ExtResource( 18 )
 hframes = 2
 vframes = 3
 
@@ -712,38 +874,38 @@ vframes = 3
 
 [node name="Empty" type="Sprite3D" parent="Camera/WeaponManager/Weapons/Pistol/Animations"]
 transform = Transform( 0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, 0.0670378, -0.107411, -0.672383 )
+visible = false
 billboard = 1
 texture = ExtResource( 14 )
 hframes = 2
 vframes = 2
+frame = 2
 
 [node name="Idle" type="Sprite3D" parent="Camera/WeaponManager/Weapons/Pistol/Animations"]
 transform = Transform( 0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, 0.0670378, -0.107411, -0.672383 )
 visible = false
 billboard = 1
-texture = SubResource( 19 )
-hframes = 2
-vframes = 3
+texture = ExtResource( 21 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Camera/WeaponManager/Weapons/Pistol/Animations"]
-anims/RESET = SubResource( 33 )
-anims/attack = SubResource( 34 )
-anims/empty = SubResource( 35 )
-anims/idle = SubResource( 36 )
-anims/reload = SubResource( 37 )
+anims/RESET = SubResource( 46 )
+anims/attack = SubResource( 42 )
+anims/empty = SubResource( 43 )
+anims/idle = SubResource( 44 )
+anims/reload = SubResource( 45 )
 
 [node name="Shotgun" type="Spatial" parent="Camera/WeaponManager/Weapons"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.130691, 0.0411246, 0.139673 )
+visible = false
 script = ExtResource( 10 )
 damage = 10
+ammo = 10
+ammo_mag_max = 2
+ammo_mag = 2
 attack_rate = 0.5
 
 [node name="Graphics" type="Spatial" parent="Camera/WeaponManager/Weapons/Shotgun"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.154344 )
-
-[node name="shotgun" parent="Camera/WeaponManager/Weapons/Shotgun/Graphics" instance=ExtResource( 7 )]
-transform = Transform( 0.137906, 0, 0, 0, 0.137906, 0, 0, 0, 0.137906, 0, -0.000802144, 0.0218236 )
-visible = false
 
 [node name="MuzzleFlash" type="Spatial" parent="Camera/WeaponManager/Weapons/Shotgun/Graphics"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0176045, 0.049455, -0.899171 )
@@ -808,6 +970,7 @@ vframes = 2
 
 [node name="Idle" type="Sprite3D" parent="Camera/WeaponManager/Weapons/Shotgun/Animations"]
 transform = Transform( 0.32, 0, 0, 0, 0.32, 0, 0, 0, 0.32, 0.0670378, -0.107411, -0.672383 )
+visible = false
 billboard = 1
 texture = ExtResource( 40 )
 

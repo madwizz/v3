@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/shooting_sheet.png-3692df4a8b7b8f0bd01c4069fe9331dd.stex"
+path="res://.import/melee_02.png-f1e6677b8887630dd5638b3f414b3690.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://weapons/frames/pistol/shooting/shooting_sheet.png"
-dest_files=[ "res://.import/shooting_sheet.png-3692df4a8b7b8f0bd01c4069fe9331dd.stex" ]
+source_file="res://weapons/frames/melee/melee_02.png"
+dest_files=[ "res://.import/melee_02.png-f1e6677b8887630dd5638b3f414b3690.stex" ]
 
 [params]
 
@@ -23,7 +23,7 @@ flags/repeat=1
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
-flags/srgb=1
+flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

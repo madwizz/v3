@@ -16,8 +16,8 @@ var bodies_to_exclude : Array = []
 
 export var damage = 5
 export var ammo = 30
-export var ammo_mag_max = 10
-var ammo_mag = ammo_mag_max
+export var ammo_mag_max = 7
+export var ammo_mag = 7
 
 export var attack_rate = 0.2
 var attack_timer : Timer

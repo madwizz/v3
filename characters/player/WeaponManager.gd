@@ -1,9 +1,10 @@
 extends Spatial
 
 
-enum WEAPON_SLOTS { PISTOL, SHOTGUN }
+enum WEAPON_SLOTS { MELEE, PISTOL, SHOTGUN }
 var slots_unlocked = {
-	WEAPON_SLOTS.PISTOL: true,
+	WEAPON_SLOTS.MELEE: true,
+	WEAPON_SLOTS.PISTOL: false,
 	WEAPON_SLOTS.SHOTGUN: false,
 }
 
@@ -36,7 +37,7 @@ func init(_fire_point: Spatial, _bodies_to_exclude: Array):
 	for weapon in weapons:
 		weapon.connect("fired", self, "emit_ammo_changed_signal")
 	
-	switch_to_weapon_slot(WEAPON_SLOTS.PISTOL)
+	switch_to_weapon_slot(WEAPON_SLOTS.MELEE)
 
 func attack(attack_input_just_pressed: bool, attack_input_held: bool):
 	if cur_weapon.has_method("attack"):
@@ -59,7 +60,7 @@ func switch_to_last_weapon():
 func switch_to_weapon_slot(slot_ind: int):
 	if slot_ind < 0 or slot_ind >= slots_unlocked.size():
 		return
-	if !slots_unlocked[cur_slot]:
+	if !slots_unlocked[slot_ind]:  # Corrected to check slot_ind
 		return
 	disable_all_weapons()
 	cur_weapon = weapons[slot_ind]
@@ -68,6 +69,7 @@ func switch_to_weapon_slot(slot_ind: int):
 	else:
 		cur_weapon.show()
 	emit_ammo_changed_signal()
+
 
 func disable_all_weapons():
 	for weapon in weapons:
