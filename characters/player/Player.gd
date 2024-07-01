@@ -1,5 +1,7 @@
 extends KinematicBody
 
+# TODO not healing on pickup health
+
 var hotkeys = {
 	KEY_1: 0,
 	KEY_2: 1,

@@ -1,13 +1,10 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://environment/raw_assets/grass_lowres.png" type="Texture" id=1]
 [ext_resource path="res://environment/assets/brickwall.tscn" type="PackedScene" id=2]
 [ext_resource path="res://environment/assets/shed.tscn" type="PackedScene" id=3]
 [ext_resource path="res://characters/player/Player.tscn" type="PackedScene" id=4]
-[ext_resource path="res://characters/ghost/Monster.tscn" type="PackedScene" id=5]
 [ext_resource path="res://characters/vomiter/RangedMonster.tscn" type="PackedScene" id=6]
-[ext_resource path="res://characters/goon/BigMonster.tscn" type="PackedScene" id=7]
-[ext_resource path="res://weapons/FireballSpawner.tscn" type="PackedScene" id=8]
 [ext_resource path="res://pickups/ShotGunAmmoPickup.tscn" type="PackedScene" id=9]
 [ext_resource path="res://pickups/ShotGunPickup.tscn" type="PackedScene" id=10]
 [ext_resource path="res://pickups/PistolAmmoPickup.tscn" type="PackedScene" id=11]
@@ -79,14 +76,10 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 8, 1, -
 visible = false
 navmesh = SubResource( 4 )
 
-[node name="Ghost" parent="Navigation" instance=ExtResource( 5 )]
-transform = Transform( 0.969749, 0, 0.244106, 0, 1, 0, -0.244106, 0, 0.969749, -1.98647, 0.813549, -13.4935 )
-
 [node name="Vomiter" parent="Navigation" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.976021, -15 )
-
-[node name="Goon" parent="Navigation" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.45424, 0.943625, -18.393 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -17.254 )
+attack_rate = 1.0
+attack_speed = 5.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 6 )
@@ -96,12 +89,6 @@ transform = Transform( -1, 3.55271e-15, -8.74228e-08, -5.10321e-08, 0.811941, 0.
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 13.9383 )
-
-[node name="FireballSpawner" parent="." instance=ExtResource( 8 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5797, 2.9269, 12.0526 )
-
-[node name="Timer" type="Timer" parent="FireballSpawner"]
-autostart = true
 
 [node name="HealthPickup" parent="." instance=ExtResource( 14 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00976086, 2.19636, 16.7236 )
@@ -117,5 +104,3 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7241, 2.00423, 15.4839 )
 
 [node name="ShotgunPickup" parent="." instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.81751, 2.00423, 14.3862 )
-
-[connection signal="timeout" from="FireballSpawner/Timer" to="FireballSpawner" method="fire"]

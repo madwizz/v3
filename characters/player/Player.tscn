@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://characters/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://characters/CharacterMover.tscn" type="PackedScene" id=2]
@@ -21,6 +21,9 @@
 [ext_resource path="res://characters/player/PickupManager.gd" type="Script" id=19]
 [ext_resource path="res://ui/Stats.gd" type="Script" id=20]
 [ext_resource path="res://weapons/frames/pistol/empty/gun sprite_empty_01.png" type="Texture" id=21]
+[ext_resource path="res://ui/face_sprites/100_hp.png" type="Texture" id=22]
+[ext_resource path="res://ui/health bar/healthbar.png" type="Texture" id=23]
+[ext_resource path="res://characters/player/Face.gd" type="Script" id=24]
 [ext_resource path="res://weapons/frames/shotgun/attack/2nd barrel/2nd barrel_01.png" type="Texture" id=40]
 
 [sub_resource type="CapsuleShape" id=1]
@@ -1019,15 +1022,23 @@ shape = SubResource( 32 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Stats" type="Label" parent="CanvasLayer"]
-visible = false
-margin_left = 20.0
-margin_top = 17.0
-margin_right = 85.0
-margin_bottom = 53.0
+margin_left = 262.0
+margin_top = 89.0
+margin_right = 327.0
+margin_bottom = 125.0
 rect_scale = Vector2( 2.66422, 2.37684 )
 text = "Heath: 0
 Ammo: 0"
 script = ExtResource( 20 )
+
+[node name="Ark" type="Sprite" parent="CanvasLayer"]
+position = Vector2( 345, 86 )
+texture = ExtResource( 23 )
+
+[node name="Face" type="Sprite" parent="CanvasLayer"]
+position = Vector2( 82, 94 )
+texture = ExtResource( 22 )
+script = ExtResource( 24 )
 
 [connection signal="ammo_changed" from="Camera/WeaponManager" to="CanvasLayer/Stats" method="update_ammo"]
 [connection signal="fired" from="Camera/WeaponManager/Weapons/Pistol" to="Camera/WeaponManager/Weapons/Pistol/Graphics/MuzzleFlash" method="flash"]

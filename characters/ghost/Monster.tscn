@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://characters/enemies/Ghost/a ghost_damage.gltf" type="PackedScene" id=1]
+[ext_resource path="res://characters/enemies/Ghost_new/a ghost_damage.glb" type="PackedScene" id=1]
 [ext_resource path="res://weapons/DamageArea.tscn" type="PackedScene" id=2]
 [ext_resource path="res://characters/CharacterMover.tscn" type="PackedScene" id=3]
 [ext_resource path="res://characters/HealthManager.tscn" type="PackedScene" id=4]
@@ -160,7 +160,7 @@ tracks/20/enabled = true
 tracks/20/keys = PoolRealArray( 0, 1, 0, 0, 0, 5.36445e-22, -9.52918e-36, -3.55271e-15, 1, 1, 1, 1, 0.291667, 1, 0, 0, 0, 5.36445e-22, -9.52918e-36, -3.55271e-15, 1, 1, 1, 1 )
 
 [sub_resource type="Animation" id=7]
-resource_name = "idle_loop"
+resource_name = "idle"
 length = 2.08333
 loop = true
 tracks/0/type = "transform"
@@ -466,6 +466,7 @@ tracks/20/keys = PoolRealArray( 0, 1, 0, 0, 0, 5.36445e-22, -9.52918e-36, -3.552
 [sub_resource type="CapsuleShape" id=1]
 
 [node name="Ghost" type="KinematicBody"]
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0 )
 collision_layer = 2
 collision_mask = 3
 script = ExtResource( 6 )
@@ -473,11 +474,11 @@ script = ExtResource( 6 )
 [node name="Graphics" type="Spatial" parent="."]
 
 [node name="Enemy" parent="Graphics" instance=ExtResource( 1 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0 )
 
 [node name="AnimationPlayer" parent="Graphics/Enemy" index="1"]
 anims/hurt = SubResource( 11 )
-anims/idle_loop = SubResource( 7 )
+anims/idle = SubResource( 7 )
 anims/move_loop = SubResource( 14 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

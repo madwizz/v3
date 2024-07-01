@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://characters/enemies/Vomiter/projectile vomiter NEW.gltf" type="PackedScene" id=1]
+[ext_resource path="res://characters/enemies/Vomiter_new/projectile vomiter NEW.glb" type="PackedScene" id=1]
 [ext_resource path="res://weapons/FireballSpawner.tscn" type="PackedScene" id=2]
 [ext_resource path="res://characters/CharacterMover.tscn" type="PackedScene" id=3]
 [ext_resource path="res://characters/HealthManager.tscn" type="PackedScene" id=4]
@@ -368,7 +368,7 @@ tracks/50/loop_wrap = true
 tracks/50/imported = false
 tracks/50/enabled = true
 tracks/50/keys = {
-"times": PoolRealArray( 0.5 ),
+"times": PoolRealArray( 0.4 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],
@@ -1085,7 +1085,7 @@ tracks/49/enabled = true
 tracks/49/keys = PoolRealArray( 0, 1, 0, 0, 0, -1.77636e-15, 0, 0, 1, 1, 1, 1, 0.291667, 1, 0, 0, 0, -1.77636e-15, 0, 0, 1, 1, 1, 1 )
 
 [sub_resource type="Animation" id=5]
-resource_name = "idle_loop"
+resource_name = "idle"
 length = 1.66667
 loop = true
 tracks/0/type = "transform"
@@ -1800,7 +1800,7 @@ tracks/49/keys = PoolRealArray( 0, 1, 0, 0, 0, -1.77636e-15, 0, 0, 1, 1, 1, 1, 1
 collision_layer = 2
 collision_mask = 3
 script = ExtResource( 6 )
-attack_range = 5.0
+attack_range = 10.0
 
 [node name="Graphics" type="Spatial" parent="."]
 
@@ -1810,7 +1810,7 @@ attack_range = 5.0
 anims/attack = SubResource( 8 )
 anims/die = SubResource( 9 )
 anims/hurt = SubResource( 12 )
-anims/idle_loop = SubResource( 5 )
+anims/idle = SubResource( 5 )
 anims/move_loop = SubResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -1835,5 +1835,8 @@ script = ExtResource( 7 )
 
 [node name="FireballSpawner" parent="Aim" instance=ExtResource( 2 )]
 transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, -0.142062, 0.538195 )
+
+[node name="FireballSpawner2" parent="Aim" instance=ExtResource( 2 )]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -7.89126, -1.69, -4.46667 )
 
 [editable path="Graphics/Enemy"]
